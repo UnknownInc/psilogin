@@ -1,0 +1,20 @@
+steps:
+# step 0 store build info
+- id: "Store Values"
+  name: ubuntu
+  entrypoint: bash
+  args:
+    - -c
+    - |
+      # save the commit sha & build date
+      NOW=$(date +"%Y-%m-%d %T")
+      echo $BRANCH_NAME $SHORT_SHA $$NOW > BUILDINFO
+- name: 'gcr.io/kaniko-project/executor:latest'
+  args: [
+    '--destination=gcr.io/$PROJECT_ID/psilogin:$SHORT_SHA',
+    '--destination=gcr.io/$PROJECT_ID/psilogin:latest',
+    '--build-arg', 'COMMITSHA=$COMMIT_SHA',
+    '--build-arg', 'SHORTSHA=$SHORT_SHA',
+    '--cache=true',
+    '--cache-ttl=336h'
+  ]

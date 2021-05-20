@@ -10,7 +10,7 @@
     "test": "NODE_ENV=test LOG_LEVEL=error nyc --reporter=html --reporter=text mocha --exit -r dotenv/config --require should --reporter spec --timeout 10000",
     "test:watch": "npm test -- --watch",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "build": "cd ui && npm run build"
+    "build": ""
   },
   "dependencies": {
     "cookie-parser": "1.4.5",

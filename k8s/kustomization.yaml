@@ -1,8 +1,10 @@
-resources:
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+bases:
 - ./overlays/dev
 namePrefix: psnext-a-
 namespace: dev
 images:
-- name: loginapp
-  newName: gcr.io/ind-si-infra-managment-184960/psilogin
-  newTag: latest
+  - name: loginappimage
+    newName: @IMAGE_NAME@
+    newTag: @IMAGE_TAG@

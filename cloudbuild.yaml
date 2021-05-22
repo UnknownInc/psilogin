@@ -20,14 +20,19 @@ steps:
     '--cache-ttl=336h'
   ]
 - id: deploy
-  name: 'gcr.io/$PROJECT_ID/kustomize'
+  name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: bash
   args:
-  - 'build'
-  - 'k8s/overlays/dev'
+    - -c
+    - |
+      # Replace image in k8s/kustomization.yaml
+      sed -i "s#@IMAGE_NAME@#gcr.io/$PROJECT_ID/psilogin#g" k8s/kustomization.yaml
+      # Replace image in k8s/kustomization.yaml
+      sed -i "s#@IMAGE_TAG@#$SHORT_SHA#g" k8s/kustomization.yaml
+      # deploy
+      kubectl kustomize ./k8s
   env:
-    - 'APPLY=true'
-    - 'CLOUDSDK_COMPUTE_ZONE=$_CLOUDSDK_COMPUTE_ZONE'
-    - 'CLOUDSDK_CONTAINER_CLUSTER=_CLOUDSDK_CONTAINER_CLUSTER'
-    - 'GCLOUD_PROJECT=$PROJECT_ID'
+  - 'CLOUDSDK_COMPUTE_ZONE=$_CLOUDSDK_COMPUTE_ZONE'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=$_CLOUDSDK_CONTAINER_CLUSTER'
 substitutions:
   _APP_NAME: 'psilogin'

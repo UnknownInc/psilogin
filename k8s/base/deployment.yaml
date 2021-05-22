@@ -23,7 +23,7 @@ spec:
           secretName: gcsa
       containers:
       - name: loginapp
-        image: psilogin:latest
+        image: loginappimage:tag
         imagePullPolicy: "Always"
         volumeMounts:
         - name: gcsa-volume

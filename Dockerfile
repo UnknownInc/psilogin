@@ -20,7 +20,8 @@ COPY --chown=node:node . /usr/src/app
 
 RUN npm run build
 ENV NODE_ENV production
+ENV PORT=8080
 ARG COMMITSHA=latest
 ARG SHORTSHA=last
-EXPOSE 8800
+EXPOSE 8080
 CMD ["dumb-init", "npm", "start" ]

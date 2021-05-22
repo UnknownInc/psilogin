@@ -29,11 +29,11 @@ spec:
         - name: gcsa-volume
           readOnly: true
           mountPath: "/etc/gcsa"
-        # envFrom:
-        #   - secretRef:
-        #       name: psienvsecrets
+        envFrom:
+          - secretRef:
+              name: psienvsecrets
         ports:
-        - containerPort: 8800
+        - containerPort: 8080
         resources:
           requests:
             cpu: 100m

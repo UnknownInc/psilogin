@@ -1,6 +1,6 @@
 import session from 'cookie-session';
 import { join } from 'path';
-import { readFileSync } from 'fs';
+import { existsSync, readFileSync } from 'fs';
 import express, { json, urlencoded } from 'express';
 import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
@@ -56,7 +56,12 @@ import openApiRouter from './openapi/index.js';
 app.use(openApiRouter);
 
 app.get('/*', function (_req, res) {
-  res.sendFile(join(__dirname, '../ui/build', 'index.html'));
+  const indexfile=join(__dirname, '../ui/build', 'index.html');
+  if (existsSync(indexfile)) {
+    res.sendFile(indexfile);
+  } else {
+    res.send(`${JSON.stringify(req.headers)}`)
+  }
 });
 
 export default app;

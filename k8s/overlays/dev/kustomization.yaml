@@ -4,6 +4,6 @@ bases:
 - ../../base
 patchesStrategicMerge:
   - "service.yaml"
-namePrefix: main-
+namePrefix: dev-
 commonLabels:
-  environment: main
+  environment: dev

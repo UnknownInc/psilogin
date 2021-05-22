@@ -9,12 +9,17 @@ steps:
       # save the commit sha & build date
       NOW=$(date +"%Y-%m-%d %T")
       echo $BRANCH_NAME $SHORT_SHA $$NOW > BUILDINFO
+      # update version
+      cat VERSION | awk -F. '/[0-9]+\./{$NF++;print}' OFS=. | tee VERSION
+      VERSION=$(cat VERSION)
+      # Replace version in k8s/kustomization.yaml
+      sed -i "s#VERSION#$VERSION#g" k8s/kustomization.yaml
       # Replace image in k8s/kustomization.yaml
-      sed -i "s#@IMAGE_NAME@#gcr.io/$PROJECT_ID/psilogin#g" k8s/kustomization.yaml
+      sed -i "s#IMAGE_NAME#gcr.io/$PROJECT_ID/psilogin#g" k8s/kustomization.yaml
       # Replace image tag in k8s/kustomization.yaml
-      sed -i "s#@IMAGE_TAG@#$SHORT_SHA#g" k8s/kustomization.yaml
+      sed -i "s#IMAGE_TAG#$SHORT_SHA#g" k8s/kustomization.yaml
       # Replace overlay in k8s/kustomization.yaml
-      sed -i "s#@BRANCH@#dev#g" k8s/kustomization.yaml
+      sed -i "s#BRANCH#$BRANCH_NAME#g" k8s/kustomization.yaml
 - id: "Build Container Image"
   name: 'gcr.io/kaniko-project/executor:latest'
   args: [

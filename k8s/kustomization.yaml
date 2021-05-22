@@ -6,3 +6,6 @@ images:
   - name: loginappimage
     newName: IMAGE_NAME
     newTag: IMAGE_TAG
+commonLabels:
+  version: VERSION
+  environment: BRANCH

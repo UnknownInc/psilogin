@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: login
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: login
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  minReadySeconds: 5
+  template:
+    metadata:
+      labels:
+        app: login
+    spec:
+      volumes:
+      - name: gcsa-volume
+        secret:
+          secretName: gcsa
+      containers:
+      - name: loginapp
+        image: psilogin:latest
+        imagePullPolicy: "Always"
+        volumeMounts:
+        - name: gcsa-volume
+          readOnly: true
+          mountPath: "/etc/gcsa"
+        # envFrom:
+        #   - secretRef:
+        #       name: psienvsecrets
+        ports:
+        - containerPort: 8800
+        resources:
+          requests:
+            cpu: 100m
+            memory: 64Mi
+          limits:
+            cpu: 500m
+            memory: 256Mi

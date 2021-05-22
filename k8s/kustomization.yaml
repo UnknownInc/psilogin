@@ -1,0 +1,8 @@
+resources:
+- ./overlays/dev
+namePrefix: psnext-a-
+namespace: dev
+images:
+- name: loginapp
+  newName: gcr.io/ind-si-infra-managment-184960/psilogin
+  newTag: latest

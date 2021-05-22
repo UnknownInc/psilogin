@@ -9,7 +9,8 @@ steps:
       # save the commit sha & build date
       NOW=$(date +"%Y-%m-%d %T")
       echo $BRANCH_NAME $SHORT_SHA $$NOW > BUILDINFO
-- name: 'gcr.io/kaniko-project/executor:latest'
+- id: "Build Container Image"
+  name: 'gcr.io/kaniko-project/executor:latest'
   args: [
     '--destination=gcr.io/$PROJECT_ID/psilogin:$SHORT_SHA',
     '--destination=gcr.io/$PROJECT_ID/psilogin:latest',
@@ -18,3 +19,15 @@ steps:
     '--cache=true',
     '--cache-ttl=336h'
   ]
+- id: deploy
+  name: 'gcr.io/$PROJECT_ID/kustomize'
+  args:
+  - 'build'
+  - 'k8s/overlays/dev'
+  env:
+    - 'APPLY=true'
+    - 'CLOUDSDK_COMPUTE_ZONE=$_CLOUDSDK_COMPUTE_ZONE'
+    - 'CLOUDSDK_CONTAINER_CLUSTER=_CLOUDSDK_CONTAINER_CLUSTER'
+    - 'GCLOUD_PROJECT=$PROJECT_ID'
+substitutions:
+  _APP_NAME: 'psilogin'

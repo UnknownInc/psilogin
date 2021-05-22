@@ -55,7 +55,7 @@ app.use('/api', apiRouter);
 import openApiRouter from './openapi/index.js';
 app.use(openApiRouter);
 
-app.get('/*', function (_req, res) {
+app.get('/*', function (req, res) {
   const indexfile=join(__dirname, '../ui/build', 'index.html');
   if (existsSync(indexfile)) {
     res.sendFile(indexfile);

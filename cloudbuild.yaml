@@ -9,6 +9,10 @@ steps:
       # save the commit sha & build date
       NOW=$(date +"%Y-%m-%d %T")
       echo $BRANCH_NAME $SHORT_SHA $$NOW > BUILDINFO
+      # Replace image in k8s/kustomization.yaml
+      sed -i "s#@IMAGE_NAME@#gcr.io/$PROJECT_ID/psilogin#g" k8s/kustomization.yaml
+      # Replace image in k8s/kustomization.yaml
+      sed -i "s#@IMAGE_TAG@#$SHORT_SHA#g" k8s/kustomization.yaml
 - id: "Build Container Image"
   name: 'gcr.io/kaniko-project/executor:latest'
   args: [
@@ -21,18 +25,9 @@ steps:
   ]
 - id: deploy
   name: 'gcr.io/cloud-builders/kubectl'
-  entrypoint: bash
-  args:
-    - -c
-    - |
-      # Replace image in k8s/kustomization.yaml
-      sed -i "s#@IMAGE_NAME@#gcr.io/$PROJECT_ID/psilogin#g" k8s/kustomization.yaml
-      # Replace image in k8s/kustomization.yaml
-      sed -i "s#@IMAGE_TAG@#$SHORT_SHA#g" k8s/kustomization.yaml
-      # deploy
-      kubectl apply -k ./k8s
+  args: ['apply', '-k', './k8s']
   env:
-  - 'CLOUDSDK_COMPUTE_ZONE=$_CLOUDSDK_COMPUTE_ZONE'
-  - 'CLOUDSDK_CONTAINER_CLUSTER=$_CLOUDSDK_CONTAINER_CLUSTER'
+    - 'CLOUDSDK_COMPUTE_ZONE=$_CLOUDSDK_COMPUTE_ZONE'
+    - 'CLOUDSDK_CONTAINER_CLUSTER=$_CLOUDSDK_CONTAINER_CLUSTER'
 substitutions:
   _APP_NAME: 'psilogin'

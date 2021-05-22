@@ -21,6 +21,7 @@ steps:
       sed -i "s#IMAGE_TAG#$SHORT_SHA#g" k8s/kustomization.yaml
       # Replace overlay in k8s/kustomization.yaml
       sed -i "s#BRANCH#$BRANCH_NAME#g" k8s/kustomization.yaml
+      cat k8s/kustomization.yaml
 - id: "Build Container Image"
   name: 'gcr.io/kaniko-project/executor:latest'
   args: [

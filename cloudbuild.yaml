@@ -30,7 +30,7 @@ steps:
       # Replace image in k8s/kustomization.yaml
       sed -i "s#@IMAGE_TAG@#$SHORT_SHA#g" k8s/kustomization.yaml
       # deploy
-      kubectl kustomize ./k8s
+      kubectl apply kustomize ./k8s
   env:
   - 'CLOUDSDK_COMPUTE_ZONE=$_CLOUDSDK_COMPUTE_ZONE'
   - 'CLOUDSDK_CONTAINER_CLUSTER=$_CLOUDSDK_CONTAINER_CLUSTER'

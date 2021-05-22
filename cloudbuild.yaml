@@ -30,7 +30,7 @@ steps:
       # Replace image in k8s/kustomization.yaml
       sed -i "s#@IMAGE_TAG@#$SHORT_SHA#g" k8s/kustomization.yaml
       # deploy
-      kubectl kustomize apply ./k8s
+      kubectl apply -k ./k8s
 # - id: deploy
 #   name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
 #   entrypoint: bash

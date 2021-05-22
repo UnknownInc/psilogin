@@ -25,5 +25,5 @@ ARG COMMITSHA=latest
 ARG SHORTSHA=last
 EXPOSE 8080
 RUN VERSION=$(cat VERSION)
-RUN cat package.json|sed 's/\(\"version\":\)\(.*\)/\1 \""$$VERSION"\",/g'
+RUN cat package.json|sed 's/\(\"version\":\)\(.*\)/\1 \"$(cat VERSION)\",/g'
 CMD ["dumb-init", "npm", "start" ]

@@ -6,7 +6,7 @@ steps:
   args:
     - -c
     - |
-      # save the commit sha & build date
+      # save the commit SHORTSHA & build date
       NOW=$(date +"%Y-%m-%d %T")
       echo $BRANCH_NAME $SHORT_SHA $$NOW > BUILDINFO
       # update version

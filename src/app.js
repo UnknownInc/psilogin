@@ -47,9 +47,7 @@ app.get('/_buildinfo', function(_req, res){
   try {
   const jsondata=readFileSync(join(__dirname,"../BUILDINFO")).toString();
   const buildinfo = JSON.parse(jsondata);
-  return res.send({
-      buildinfo
-    });
+  return res.json(buildinfo);
   } catch (e) {
     app.log.error(e);
     return res.send({});

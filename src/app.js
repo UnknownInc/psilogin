@@ -44,9 +44,16 @@ app.get('/ping', function(_req,res){
 })
 
 app.get('/_buildinfo', function(_req, res){
-  res.send({
-    buildinfo: readFileSync(join(__dirname,"../BUILDINFO")).toString().trim()
-  })
+  try {
+  const jsondata=readFileSync(join(__dirname,"../BUILDINFO")).toString();
+  const buildinfo = JSON.parse(jsondata);
+  return res.send({
+      buildinfo
+    });
+  } catch (e) {
+    app.log.error(e);
+    return res.send({});
+  }
 })
 
 import apiRouter from './api/index.js';

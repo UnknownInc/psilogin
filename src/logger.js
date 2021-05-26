@@ -14,7 +14,7 @@ const logFormat = printf( ({ level, message, timestamp , ...metadata}) => {
 });
 
 const logger = createLogger({
-  level: (process.env.LOG_LEVEL || 'debug'),
+  level: (process.env.LOGLEVEL || 'debug'),
   format: combine(
     format.colorize(),
     splat(),

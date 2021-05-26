@@ -1,0 +1,13 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: psiapp
+spec:
+  selector:
+    matchLabels:
+      app: dev-login
+      environment: dev
+  template:
+    metadata:
+      labels:
+        app: dev-login

@@ -3,9 +3,8 @@ kind: Kustomization
 bases:
 - ./overlays/BRANCH
 images:
-  - name: loginappimage
+  - name: psiappimage
     newName: IMAGE_NAME
     newTag: IMAGE_TAG
 commonLabels:
   version: VERSION
-  environment: BRANCH

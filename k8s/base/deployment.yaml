@@ -1,12 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: login
+  name: psiapp
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: login
+      domain: psi
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -15,15 +15,15 @@ spec:
   template:
     metadata:
       labels:
-        app: login
+        domain: psi
     spec:
       volumes:
       - name: gcsa-volume
         secret:
           secretName: gcsa
       containers:
-      - name: loginapp
-        image: loginappimage:tag
+      - name: psiappcontainer
+        image: psiappimage:tag
         imagePullPolicy: "Always"
         volumeMounts:
         - name: gcsa-volume

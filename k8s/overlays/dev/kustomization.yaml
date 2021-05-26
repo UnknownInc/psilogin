@@ -4,7 +4,8 @@ bases:
 - ../../base
 patchesStrategicMerge:
   - "service.yaml"
+  - "deployment.yaml"
   - "configMap.yaml"
-namePrefix: dev-
+namePrefix: dev-login-
 commonLabels:
   environment: dev

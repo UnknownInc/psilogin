@@ -1,4 +1,6 @@
 import app from './app.js';
+import { join } from 'path';
+import { existsSync, readFileSync } from 'fs'
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
@@ -15,7 +17,6 @@ const __dirname = dirname(__filename);
         app.log.info(builddata)
       } catch (e) {
         app.log.error(e);
-        return res.send({});
       }
   });
 

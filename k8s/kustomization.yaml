@@ -6,5 +6,3 @@ images:
   - name: psiappimage
     newName: IMAGE_NAME
     newTag: IMAGE_TAG
-commonLabels:
-  version: VERSION

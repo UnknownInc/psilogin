@@ -52,6 +52,10 @@ app.get('/_buildinfo', function(_req, res){
     app.log.error(e);
     return res.send({});
   }
+});
+
+app.get('/_env', function(_req, res){
+  return res.json(process.env);
 })
 
 import apiRouter from './api/index.js';

@@ -1,10 +1,22 @@
 import app from './app.js';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 
 ;(async ()=>{
 
   const server = app.listen(app.config.PORT, () => {
-      app.log.info(`PSI login server listening at port:${app.config.PORT}`)
+      app.log.info(`PSI login server app listening at port:${app.config.PORT}`); 
+      try {
+        const builddata=readFileSync(join(__dirname,"../BUILDINFO")).toString();
+        app.log.info(builddata)
+      } catch (e) {
+        app.log.error(e);
+        return res.send({});
+      }
   });
 
   function onSIGHUP(signal) {

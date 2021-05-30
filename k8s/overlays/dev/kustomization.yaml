@@ -7,5 +7,6 @@ patchesStrategicMerge:
   - "deployment.yaml"
   - "configMap.yaml"
 namePrefix: dev-login-
+namespace: dev
 commonLabels:
   environment: dev
